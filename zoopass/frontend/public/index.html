@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZooPass</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <script type="module" src="/js/top.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/">ZooPass</a>
+      <nav>
+        <a id="nav-login" href="/login">ログイン</a>
+        <a id="nav-mypage" href="/mypage" hidden>マイページ</a>
+        <button id="nav-logout" type="button" hidden>ログアウト</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h1>ZooPass 動物園 入園予約</h1>
+      <p>会員登録をすると、日付を指定して入園チケットを予約できます。</p>
+      <p class="note">※ セキュリティ講義用の演習アプリです。実在の施設・サービスではありません。</p>
+    </section>
+
+    <section>
+      <h2>空き状況（2週間分）</h2>
+      <p id="slots-status">読み込み中…</p>
+      <table>
+        <thead><tr><th>日付</th><th>空き</th></tr></thead>
+        <tbody id="slots"></tbody>
+      </table>
+      <p><a class="button" href="/mypage">予約する</a></p>
+    </section>
+  </main>
+</body>
+</html>
