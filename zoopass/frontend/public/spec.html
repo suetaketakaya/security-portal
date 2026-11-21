@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VATL-100 仕様書 | Virtual Automotive Test Lab</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/">Virtual Automotive Test Lab</a>
+      <nav>
+        <a href="/">エミュレーター</a>
+        <a href="/spec">仕様書</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container spec">
+    <h1>車載インフォテインメント VATL-100 機能仕様書</h1>
+    <p class="note">版数 1.0 ／ ワークショップ用の架空の製品です。</p>
+
+    <section>
+      <h2>0. ワークショップの進め方</h2>
+      <ol>
+        <li>この仕様書を読み、テストケースを設計する（同値分割・境界値分析・状態遷移・デシジョンテーブルなど）。</li>
+        <li>各テストケースに「前提条件・操作手順・期待結果」を書く。期待結果は必ず仕様書の要求ID を根拠にする。</li>
+        <li><a href="/">エミュレーター</a>でテストを実行し、実際の結果を記録する。画面下の「操作ログ」をコピーして証跡にできる。</li>
+        <li>期待結果と違った場合は不具合として報告する（要求ID・再現手順・期待結果・実際の結果）。</li>
+      </ol>
+      <p>エミュレーターの右側「車両信号」は、テスト用に車両の状態を変えるためのパネルです（製品の一部ではありません）。</p>
+    </section>
+
+    <section>
+      <h2>1. 電源</h2>
+      <table>
+        <thead><tr><th>ID</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>PWR-01</td><td>ACC が OFF のとき、画面は消灯し、すべてのボタン操作を受け付けない。</td></tr>
+          <tr><td>PWR-02</td><td>ACC を ON にすると起動画面を表示し、約1.5秒後にホーム画面を表示する。起動中はボタン操作を受け付けない。</td></tr>
+          <tr><td>PWR-03</td><td>ACC を OFF にしたときの音量・音源・周波数・目的地・画面の明るさを記憶し、次に ACC を ON にしたとき復元する。</td></tr>
+          <tr><td>PWR-04</td><td>起動時、記憶していた音量が <strong>21 以上</strong> の場合は音量を <strong>20</strong> にして起動する（大音量での起動を防ぐため）。20 以下の場合はそのままの音量で起動する。</td></tr>
+          <tr><td>PWR-05</td><td>起動時、ミュートは解除される。</td></tr>
+          <tr><td>PWR-06</td><td>工場出荷状態は、音量 10、ミュートなし、音源ラジオ、FM 80.0 MHz、目的地なし、明るさ 3。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>2. 音量</h2>
+      <table>
+        <thead><tr><th>ID</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>VOL-01</td><td>音量は <strong>0〜30</strong> の整数。VOL＋ で 1 上がり、VOL－ で 1 下がる。</td></tr>
+          <tr><td>VOL-02</td><td>音量 30 で VOL＋ を押しても 30 のまま。音量 0 で VOL－ を押しても 0 のまま。</td></tr>
+          <tr><td>VOL-03</td><td>MUTE を押すとミュートになり、画面に「MUTE」と表示する。ミュート中に MUTE を押すとミュートを解除する。</td></tr>
+          <tr><td>VOL-04</td><td>ミュート中に VOL＋ または VOL－ を押すと、ミュートを解除したうえで音量を 1 変更する。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>3. 音源</h2>
+      <table>
+        <thead><tr><th>ID</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>SRC-01</td><td>SOURCE を押すと音源を「ラジオ → Bluetoothオーディオ → USB → ラジオ…」の順に切り替える。使えない音源は飛ばす。</td></tr>
+          <tr><td>SRC-02</td><td>Bluetoothオーディオはスマートフォンが Bluetooth 接続中のときだけ、USB は USB メモリ接続中のときだけ使える。ラジオは常に使える。</td></tr>
+          <tr><td>SRC-03</td><td>再生中の音源が使えなくなった（Bluetooth 切断・USB 取り外し）ときは、ラジオに切り替え、その旨をメッセージで知らせる。</td></tr>
+          <tr><td>SRC-04</td><td>ラジオの受信範囲は FM <strong>76.0〜95.0 MHz</strong>、0.1 MHz 刻み。「選局 ▶」で 0.1 MHz 上げ、「◀ 選局」で 0.1 MHz 下げる。</td></tr>
+          <tr><td>SRC-05</td><td>95.0 MHz で「選局 ▶」を押すと 76.0 MHz に、76.0 MHz で「◀ 選局」を押すと 95.0 MHz になる。</td></tr>
+          <tr><td>SRC-06</td><td>音源がラジオ以外のとき、選局ボタンは受け付けない。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. 走行中の操作制限</h2>
+      <table>
+        <thead><tr><th>ID</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>DRV-01</td><td>車速 <strong>5 km/h 以上</strong> を「走行中」、5 km/h 未満を「停車中」とする。</td></tr>
+          <tr><td>DRV-02</td><td>走行中は「目的地検索」画面と「設定」画面を開けない。開こうとすると「走行中は操作できません」と表示する。</td></tr>
+          <tr><td>DRV-03</td><td>「目的地検索」画面または「設定」画面を表示中に走行中になったら、ホーム画面に戻し「走行中は操作できません」と表示する。</td></tr>
+          <tr><td>DRV-04</td><td>音量・MUTE・音源・選局・HOME・案内中止は走行中も操作できる。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>5. 目的地検索・ルート案内</h2>
+      <table>
+        <thead><tr><th>ID</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>NAV-01</td><td>キーワードで施設を検索する。キーワードは前後の空白を除いて <strong>1〜20 文字</strong>。</td></tr>
+          <tr><td>NAV-02</td><td>キーワードが空（空白だけの場合を含む）のときは検索せず「キーワードを入力してください」と表示する。</td></tr>
+          <tr><td>NAV-03</td><td>キーワードが 21 文字以上のときは検索せず「20文字以内で入力してください」と表示する。</td></tr>
+          <tr><td>NAV-04</td><td>施設名にキーワードを含む施設をすべて表示する（部分一致）。該当がないときは「該当する施設がありません」と表示する。</td></tr>
+          <tr><td>NAV-05</td><td>検索結果を選ぶとその施設を目的地に設定してルート案内を開始し、ホーム画面に目的地と残り距離を表示する。</td></tr>
+          <tr><td>NAV-06</td><td>案内中に「案内中止」を押すと目的地を消去する。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>6. 後退（シフト R）</h2>
+      <table>
+        <thead><tr><th>ID</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>REV-01</td><td>シフトを R にすると、どの画面よりも優先してバックカメラ映像を表示する。</td></tr>
+          <tr><td>REV-02</td><td>R の間、音量が 10 より大きければ 10 に下げる（10 以下ならそのまま）。</td></tr>
+          <tr><td>REV-03</td><td>R の間、ヘッドユニットのボタン操作はすべて受け付けない。</td></tr>
+          <tr><td>REV-04</td><td>シフトを R 以外にすると、R にする直前の画面と <strong>音量</strong> に戻す。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>7. 電話（ハンズフリー）</h2>
+      <table>
+        <thead><tr><th>ID</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>TEL-01</td><td>スマートフォンが Bluetooth 接続中に着信すると、着信画面（応答・拒否）を表示する。接続していないときは着信しない。</td></tr>
+          <tr><td>TEL-02</td><td>着信中・通話中はオーディオを消音し、画面に「通話中（消音）」と表示する。</td></tr>
+          <tr><td>TEL-03</td><td>「応答」で通話中画面（終話）になる。「拒否」または「終話」で、着信前の画面・音源・音量に戻る。</td></tr>
+          <tr><td>TEL-04</td><td>着信中・通話中は、応答・拒否・終話以外のボタン操作を受け付けない。</td></tr>
+          <tr><td>TEL-05</td><td>着信中・通話中に Bluetooth が切断された場合、または ACC が OFF になった場合は通話を終了する。</td></tr>
+          <tr><td>TEL-06</td><td>着信中・通話中にシフトを R にした場合はバックカメラを優先表示し（REV-01）、R を解除すると電話の画面に戻る。</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>8. 設定</h2>
+      <table>
+        <thead><tr><th>ID</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>SET-01</td><td>画面の明るさを <strong>1〜5</strong> の 5 段階で変更できる。5 で＋、1 で－を押しても変わらない。</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

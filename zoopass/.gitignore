@@ -5,3 +5,6 @@ node_modules/
 .env.*
 .runtimeconfig.json
 firebase-export-*/
+
+# 講師用の解答（公開リポジトリに含めない）
+instructor/
