@@ -1,13 +1,14 @@
 # security-portal
 
 講義ポータル（セキュリティニュース・講義概要・プレゼン資料・テスト演習環境 Virtual Automotive Test Lab へのリンク）。
-既存の `suetaketakaya.com` とは独立した Firebase プロジェクト `security-portal` にデプロイする。
+既存の `suetaketakaya.com` とは独立した Firebase プロジェクト `security-portal-c3fd4`（表示名 `security-portal`）にデプロイする。
+同じプロジェクトの別サイト `vatl-lab` には、`zoopass/` の VATL-100 エミュレーターを置いている。
 
 | 項目 | 値 |
 | --- | --- |
-| Firebase プロジェクト | `security-portal` |
-| Hosting | `security-portal.web.app` |
-| 独自ドメイン | `security.suetaketakaya.com` |
+| Firebase プロジェクト | `security-portal-c3fd4` |
+| Hosting | https://security-portal-c3fd4.web.app（デフォルトサイト） |
+| 独自ドメイン | `security.suetaketakaya.com`（未設定） |
 
 ## 構成
 
@@ -26,10 +27,11 @@ firebase.json    Hosting設定（セキュリティヘッダー含む）
 1. Node.js (LTS) をインストール
 2. `npm install -g firebase-tools`
 3. `firebase login`
-4. Firebaseコンソールでプロジェクト `security-portal` を作成
-   （IDが取られていた場合は `.firebaserc` の `default` を実際のIDに変更）
-5. `firebase serve --only hosting` でローカル確認
-6. `firebase deploy --only hosting`
+4. `firebase serve --only hosting` でローカル確認
+5. `firebase deploy --only hosting --project security-portal-c3fd4`
+
+プロジェクトは作成済み（`.firebaserc` の `default` は `security-portal-c3fd4`）。
+`--project` を付けているのは、CLI 側で別のプロジェクトが選ばれていても誤ってデプロイしないため。
 
 ## 独自ドメイン
 
