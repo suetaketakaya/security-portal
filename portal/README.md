@@ -1,6 +1,6 @@
 # security-portal
 
-講義ポータル（セキュリティニュース・講義概要・プレゼン資料・ZooPassへのリンク）。
+講義ポータル（セキュリティニュース・講義概要・プレゼン資料・テスト演習環境 Virtual Automotive Test Lab へのリンク）。
 既存の `suetaketakaya.com` とは独立した Firebase プロジェクト `security-portal` にデプロイする。
 
 | 項目 | 値 |
