@@ -7,10 +7,10 @@
 
 | 項目 | 値 |
 | --- | --- |
-| Firebase プロジェクト | `zoopass` |
-| 使用サービス | Hosting のみ（Firestore はすべて拒否するルールだけをデプロイ） |
+| Firebase プロジェクト | `security-portal-c3fd4`（portal と同じプロジェクトの別サイト） |
+| 使用サービス | Hosting のみ（サイト `vatl-lab`） |
 | 画面 | `/` エミュレーター、`/spec` 仕様書 |
-| 独自ドメイン | `zoopass.suetaketakaya.com` |
+| 公開URL | https://vatl-lab.web.app |
 
 ## 構成
 
@@ -21,8 +21,6 @@ frontend/public/
   js/unit.js       VATL-100 の動作モデル（DOM 非依存。テストからも読み込む）
   js/app.js        画面表示と入力の受け渡し
   css/style.css
-database/
-  firestore.rules  すべて拒否（旧 ZooPass のデータを読み書きさせない）
 tests/
   unit.test.js     仕様どおりに動く部分のテスト（node --test）
 instructor/        講師用の解答（.gitignore 済み。GitHub には含めない）
@@ -67,8 +65,6 @@ node --test instructor/        # 講師用：仕込んだ不具合が残って�
 ## デプロイ
 
 ```powershell
-firebase deploy --only hosting,firestore
+firebase deploy --only hosting
 ```
 
-`firestore` も一緒にデプロイすると、旧 ZooPass 用のルールが「すべて拒否」に置き換わる。
-インデックスの削除を確認されたら、削除してよい。
