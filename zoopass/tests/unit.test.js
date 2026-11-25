@@ -174,3 +174,122 @@ test("SET-01: 明るさは 1〜5", () => {
   for (let i = 0; i < 10; i++) u.press("brightDown");
   assert.equal(u.brightness, 1);
 });
+
+test("DRV-04: 走行中もメディア・電話・アプリ一覧は開ける", () => {
+  const u = started();
+  u.setSpeed(60);
+  assert.equal(u.press("media"), true);
+  assert.equal(u.press("phone"), true);
+  assert.equal(u.press("apps"), true);
+});
+
+test("SRC-02: 使えない音源はタブから選べない", () => {
+  const u = started();
+  assert.equal(u.press("selectSource", "usb"), false);
+  u.setUsb(true);
+  assert.equal(u.press("selectSource", "usb"), true);
+  assert.equal(u.source, "usb");
+});
+
+test("SRC-07/08: 曲送りは端で折り返し、BT と USB で別々に記憶する", () => {
+  const u = started();
+  u.setUsb(true);
+  u.setBt(true);
+  u.press("selectSource", "usb");
+  assert.equal(u.press("trackPrev"), true);
+  assert.equal(u.mediaLabel(), "Track 05");
+  u.press("trackNext");
+  assert.equal(u.mediaLabel(), "Track 01");
+  u.press("trackNext");
+  u.press("selectSource", "bt");
+  assert.equal(u.mediaLabel(), "Morning Drive");
+  u.press("selectSource", "usb");
+  assert.equal(u.mediaLabel(), "Track 02");
+  u.press("playPause");
+  assert.equal(u.playing, false);
+  u.press("selectSource", "radio");
+  assert.equal(u.press("trackNext"), false);
+});
+
+test("HVAC-01: 温度は 16.0〜32.0℃、0.5℃ 刻み", () => {
+  const u = started();
+  u.hvac("driverUp");
+  assert.equal(InfotainmentUnit.tempLabel(u.climate.driverTemp), "22.5℃");
+  for (let i = 0; i < 40; i++) u.hvac("driverUp");
+  assert.equal(InfotainmentUnit.tempLabel(u.climate.driverTemp), "32.0℃");
+  for (let i = 0; i < 40; i++) u.hvac("passengerDown");
+  assert.equal(InfotainmentUnit.tempLabel(u.climate.passengerTemp), "16.0℃");
+});
+
+test("HVAC-02: SYNC", () => {
+  const u = started();
+  u.hvac("passengerDown");
+  u.hvac("sync");
+  assert.equal(u.climate.passengerTemp, u.climate.driverTemp);
+  u.hvac("driverUp");
+  assert.equal(u.climate.passengerTemp, u.climate.driverTemp);
+  u.hvac("passengerUp");
+  assert.equal(u.climate.sync, false);
+});
+
+test("HVAC-03/04/05: 風量・A/C・デフロスター", () => {
+  const u = started();
+  for (let i = 0; i < 10; i++) u.hvac("fanUp");
+  assert.equal(u.climate.fan, 8);
+  for (let i = 0; i < 10; i++) u.hvac("fanDown");
+  assert.equal(u.climate.fan, 0);
+  assert.equal(u.climate.ac, false);
+  u.hvac("ac");
+  assert.equal(u.climate.fan, 1);
+  u.hvac("ac");
+  u.hvac("defrost");
+  assert.equal(u.climate.ac, true);
+  assert.equal(u.climate.fan, 3);
+  u.hvac("defrost");
+  assert.equal(u.climate.ac, true);
+  assert.equal(u.climate.fan, 3);
+});
+
+test("HVAC-06/07: シートヒーターの切替と、R・電話中の操作", () => {
+  const u = started();
+  for (let i = 0; i < 4; i++) u.hvac("seatDriver");
+  assert.equal(u.climate.seatDriver, 0);
+  u.setShift("R");
+  assert.equal(u.hvac("seatPassenger"), true);
+  u.setShift("P");
+  u.setBt(true);
+  u.incomingCall();
+  assert.equal(u.hvac("fanUp"), true);
+  u.setAcc(false);
+  assert.equal(u.hvac("fanUp"), false);
+});
+
+test("SET-02: テーマ", () => {
+  const u = started();
+  assert.equal(u.isDark(), false);
+  u.setNight(true);
+  assert.equal(u.isDark(), true);
+  u.press("theme", "light");
+  assert.equal(u.isDark(), false);
+  u.press("theme", "dark");
+  u.setNight(false);
+  assert.equal(u.isDark(), true);
+});
+
+test("VEH-01/02/03: 外気温・燃料・ドア", () => {
+  const u = started();
+  u.setOutsideTemp(99);
+  assert.equal(u.vehicle.outsideTemp, 50);
+  u.setFuel(10);
+  assert.equal(u.message, "");
+  u.setFuel(9);
+  assert.equal(u.message, "燃料残量が少なくなっています");
+  u.setFuel(5);
+  assert.equal(u.message, "");
+  u.setDoor(true);
+  assert.equal(u.message, "");
+  u.setDoor(false);
+  u.setSpeed(1);
+  u.setDoor(true);
+  assert.equal(u.message, "ドアが開いています");
+});

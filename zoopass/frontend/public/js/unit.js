@@ -13,8 +13,25 @@ export const KEYWORD_MAX = 20;
 export const BRIGHTNESS_MIN = 1;
 export const BRIGHTNESS_MAX = 5;
 
+export const TEMP_MIN = 32; // 0.5℃ 単位（16.0℃）
+export const TEMP_MAX = 64; // 32.0℃
+export const FAN_MAX = 8;
+export const SEAT_HEAT_MAX = 3;
+export const DEFROST_FAN_MIN = 3;
+export const FUEL_LOW = 10; // %
+export const OUTSIDE_TEMP_MIN = -30;
+export const OUTSIDE_TEMP_MAX = 50;
+
 export const SOURCES = ["radio", "bt", "usb"];
 export const SOURCE_LABELS = { radio: "ラジオ", bt: "Bluetoothオーディオ", usb: "USB" };
+export const SCREENS = ["home", "apps", "navi", "media", "phone", "settings"];
+export const THEMES = ["auto", "light", "dark"];
+
+// Bluetooth / USB の曲（架空）
+export const TRACKS = {
+  bt: ["Morning Drive", "Coastal Road", "City Lights", "Night Cruise"],
+  usb: ["Track 01", "Track 02", "Track 03", "Track 04", "Track 05"],
+};
 
 // 目的地検索の対象施設（架空）
 export const POIS = [
@@ -39,14 +56,25 @@ export class InfotainmentUnit {
 
   /** 工場出荷状態に戻す（バッテリー取り外し相当） */
   factoryReset() {
-    this.vehicle = { acc: false, speed: 0, shift: "P", usb: false, bt: false };
+    this.vehicle = {
+      acc: false, speed: 0, shift: "P", usb: false, bt: false,
+      night: false, outsideTemp: 20, fuel: 60, doorOpen: false,
+    };
     this.power = "off"; // off | booting | on
     this.volume = 10;
     this.muted = false;
     this.source = "radio";
     this.freq = 800;
+    this.playing = true;
+    this.track = { bt: 0, usb: 0 };
     this.brightness = 3;
-    this.screen = "home"; // home | navi | settings
+    this.theme = "auto";
+    this.climate = {
+      driverTemp: 44, passengerTemp: 44, // 22.0℃
+      sync: false, fan: 3, ac: true, defrost: false,
+      seatDriver: 0, seatPassenger: 0,
+    };
+    this.screen = "home"; // SCREENS のいずれか
     this.keyword = "";
     this.results = [];
     this.destination = null;
@@ -79,6 +107,20 @@ export class InfotainmentUnit {
 
   freqLabel() {
     return `FM ${(this.freq / 10).toFixed(1)} MHz`;
+  }
+
+  /** 再生中の内容（ラジオは周波数、BT / USB は曲名） */
+  mediaLabel() {
+    if (this.source === "radio") return this.freqLabel();
+    return TRACKS[this.source][this.track[this.source]];
+  }
+
+  isDark() {
+    return this.theme === "dark" || (this.theme === "auto" && this.vehicle.night);
+  }
+
+  static tempLabel(halfDegrees) {
+    return `${(halfDegrees / 2).toFixed(1)}℃`;
   }
 
   // ---------- 車両側の信号 ----------
@@ -155,6 +197,36 @@ export class InfotainmentUnit {
     }
   }
 
+  setNight(night) {
+    this.message = "";
+    this.vehicle.night = Boolean(night);
+  }
+
+  setOutsideTemp(temp) {
+    this.message = "";
+    const v = Math.round(Number(temp));
+    this.vehicle.outsideTemp = Number.isFinite(v)
+      ? Math.min(Math.max(v, OUTSIDE_TEMP_MIN), OUTSIDE_TEMP_MAX) : 20;
+  }
+
+  setFuel(percent) {
+    this.message = "";
+    const prev = this.vehicle.fuel;
+    const v = Math.round(Number(percent));
+    this.vehicle.fuel = Number.isFinite(v) ? Math.min(Math.max(v, 0), 100) : prev;
+    if (this.power === "on" && prev >= FUEL_LOW && this.vehicle.fuel < FUEL_LOW) {
+      this.message = "燃料残量が少なくなっています";
+    }
+  }
+
+  setDoor(open) {
+    this.message = "";
+    this.vehicle.doorOpen = Boolean(open);
+    if (this.power === "on" && open && this.vehicle.speed > 0) {
+      this.message = "ドアが開いています";
+    }
+  }
+
   incomingCall() {
     this.message = "";
     if (this.power !== "on" || !this.vehicle.bt || this.call) return false;
@@ -204,7 +276,30 @@ export class InfotainmentUnit {
         if (this.freq > FREQ_MIN) this.freq--;
         return true;
       case "home":
-        this.screen = "home";
+      case "apps":
+      case "media":
+      case "phone":
+        this.screen = button;
+        return true;
+      case "selectSource":
+        if (!SOURCES.includes(arg) || !this.isAvailable(arg)) return false;
+        this.source = arg;
+        return true;
+      case "playPause":
+        if (this.source === "radio") return false;
+        this.playing = !this.playing;
+        return true;
+      case "trackNext":
+      case "trackPrev": {
+        if (this.source === "radio") return false;
+        const n = TRACKS[this.source].length;
+        const step = button === "trackNext" ? 1 : n - 1;
+        this.track[this.source] = (this.track[this.source] + step) % n;
+        return true;
+      }
+      case "theme":
+        if (!THEMES.includes(arg)) return false;
+        this.theme = arg;
         return true;
       case "navi":
       case "settings":
@@ -232,6 +327,65 @@ export class InfotainmentUnit {
         return true;
       case "brightDown":
         if (this.brightness > BRIGHTNESS_MIN) this.brightness--;
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  // ---------- エアコン（画面下のバー） ----------
+
+  /**
+   * エアコン操作。バックカメラ表示中や電話中でも操作できる。受け付けたら true を返す
+   * @param {"driverUp"|"driverDown"|"passengerUp"|"passengerDown"|"fanUp"|"fanDown"|"ac"|"defrost"|"sync"|"seatDriver"|"seatPassenger"} action
+   */
+  hvac(action) {
+    this.message = "";
+    if (this.power !== "on") return false;
+    const h = this.climate;
+    const clampTemp = (v) => Math.min(Math.max(v, TEMP_MIN), TEMP_MAX);
+
+    switch (action) {
+      case "driverUp":
+      case "driverDown":
+        h.driverTemp = clampTemp(h.driverTemp + (action === "driverUp" ? 1 : -1));
+        if (h.sync) h.passengerTemp = h.driverTemp;
+        return true;
+      case "passengerUp":
+      case "passengerDown":
+        h.passengerTemp = clampTemp(h.passengerTemp + (action === "passengerUp" ? 1 : -1));
+        h.sync = false;
+        return true;
+      case "sync":
+        h.sync = !h.sync;
+        if (h.sync) h.passengerTemp = h.driverTemp;
+        return true;
+      case "fanUp":
+        if (h.fan < FAN_MAX) h.fan++;
+        return true;
+      case "fanDown":
+        if (h.fan > 0) h.fan--;
+        if (h.fan === 0) {
+          h.ac = false;
+          h.defrost = false;
+        }
+        return true;
+      case "ac":
+        h.ac = !h.ac;
+        if (h.ac && h.fan === 0) h.fan = 1;
+        return true;
+      case "defrost":
+        h.defrost = !h.defrost;
+        if (h.defrost) {
+          h.ac = true;
+          if (h.fan < DEFROST_FAN_MIN) h.fan = DEFROST_FAN_MIN;
+        }
+        return true;
+      case "seatDriver":
+        h.seatDriver = (h.seatDriver + 1) % (SEAT_HEAT_MAX + 1);
+        return true;
+      case "seatPassenger":
+        h.seatPassenger = (h.seatPassenger + 1) % (SEAT_HEAT_MAX + 1);
         return true;
       default:
         return false;

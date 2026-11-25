@@ -8,6 +8,45 @@
   <script type="module" src="/js/app.js"></script>
 </head>
 <body>
+  <!-- アイコン（独自に描いた簡易アイコン） -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 3.5 21 11M5.5 9v11h5v-6h3v6h5V9" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-apps" viewBox="0 0 24 24"><g fill="currentColor"><circle cx="5" cy="5" r="2.2"/><circle cx="12" cy="5" r="2.2"/><circle cx="19" cy="5" r="2.2"/><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/><circle cx="5" cy="19" r="2.2"/><circle cx="12" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/></g></symbol>
+    <symbol id="i-nav" viewBox="0 0 24 24"><path d="M12 2.5 20 21l-8-4-8 4z" fill="currentColor"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.8" fill="currentColor"/><circle cx="17.5" cy="16" r="2.8" fill="currentColor"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4.2-2.1 1.6a12 12 0 0 0 5.7 5.7l1.6-2.1 4.2 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z" fill="currentColor"/></symbol>
+    <symbol id="i-hangup" viewBox="0 0 24 24"><path d="M2.5 14.5v-2.2C5 10 8.4 9 12 9s7 1 9.5 3.3v2.2a1.5 1.5 0 0 1-1.9 1.4l-3.2-.9-.4-2.6a14 14 0 0 0-8 0l-.4 2.6-3.2.9a1.5 1.5 0 0 1-1.9-1.4z" fill="currentColor"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15zM10 21h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-bt" viewBox="0 0 24 24"><path d="M7 7l10 10-5 4V3l5 4L7 17" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-usb" viewBox="0 0 24 24"><path d="M12 3v15M12 18l-5-4v-3M12 15l5-4V8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="20" r="2" fill="currentColor"/><rect x="15.5" y="5.5" width="3" height="3" fill="currentColor"/><circle cx="7" cy="9.5" r="1.6" fill="currentColor"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-vol" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M3.5 21h13M7.5 7h5v4h-5zM15 9h2l2 2v6a1.5 1.5 0 0 0 3 0V8l-3-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-door" viewBox="0 0 24 24"><path d="M4 13 11 4h9v16H4zM4 13h16M15 16h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-fan" viewBox="0 0 24 24"><g fill="currentColor"><path d="M12 10.5c-.5-3 0-7 3-7.5 2.5-.4 3.5 2.5 1.5 4.5-1.3 1.3-3 2.3-4.5 3z"/><path d="M13.5 12c3-.5 7 0 7.5 3 .4 2.5-2.5 3.5-4.5 1.5-1.3-1.3-2.3-3-3-4.5z"/><path d="M12 13.5c.5 3 0 7-3 7.5-2.5.4-3.5-2.5-1.5-4.5 1.3-1.3 3-2.3 4.5-3z"/><path d="M10.5 12c-3 .5-7 0-7.5-3-.4-2.5 2.5-3.5 4.5-1.5 1.3 1.3 2.3 3 3 4.5z"/><circle cx="12" cy="12" r="1.5"/></g></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2.5v19M3.8 7.2l16.4 9.6M3.8 16.8l16.4-9.6M9.5 4l2.5 2 2.5-2M9.5 20l2.5-2 2.5 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-defrost" viewBox="0 0 24 24"><path d="M3 15c2-6 16-6 18 0z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 19c-1-1 1-2 0-3M12 20c-1-1 1-2 0-3M16 19c-1-1 1-2 0-3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-seat" viewBox="0 0 24 24"><path d="M7 3.5c1.5 0 2.5 1 2.5 2.5L10 14h6.5a2 2 0 0 1 2 2v4.5M5 20.5h13.5M7 3.5c-1.2 0-2 1-1.8 2.3L6.5 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-sync" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 1 0-5.7l3-3a4 4 0 0 1 5.7 5.7l-1.5 1.5M14 10a4 4 0 0 1 0 5.7l-3 3a4 4 0 0 1-5.7-5.7l1.5-1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="M6 5v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M19 5v14L8 12z" fill="currentColor"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M18 5v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M5 5v14l11-7z" fill="currentColor"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4.5" width="4" height="15" rx="1" fill="currentColor"/><rect x="14" y="4.5" width="4" height="15" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15 15l5.5 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-7.2 7-12.5a7 7 0 0 0-14 0C5 14.8 12 22 12 22z" fill="currentColor"/><circle cx="12" cy="9.5" r="2.6" fill="#fff"/></symbol>
+    <symbol id="i-radio" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 8 17 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="8.5" cy="14" r="2.5" fill="currentColor"/><path d="M14 12.5h4M14 15.5h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+    <symbol id="i-brightness" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-theme" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z" fill="currentColor"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24"><path d="M10 14.5V5a2 2 0 0 1 4 0v9.5a4 4 0 1 1-4 0z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="17.5" r="1.8" fill="currentColor"/></symbol>
+  </svg>
+
   <header class="site-header">
     <div class="container">
       <a class="logo" href="/">Virtual Automotive Test Lab</a>
@@ -19,114 +58,367 @@
   </header>
 
   <main class="container">
-    <p class="note">車載インフォテインメント「VATL-100」のエミュレーターです。<a href="/spec">仕様書</a>を読んでテストケースを設計し、ここで実行してください。※ ワークショップ用の架空の製品です。</p>
+    <p class="note">車載インフォテインメント「VATL-100」（架空の製品）のエミュレーターです。右の「拡張コントロール」で車両の状態を変えながら、<a href="/spec">仕様書</a>どおりに動くか確かめてください。</p>
 
     <div class="lab">
-      <!-- ヘッドユニット -->
-      <section class="unit" aria-label="ヘッドユニット">
-        <div id="screen" class="screen" data-view="off">
-          <!-- 電源OFF / 起動中 -->
-          <div class="view" data-for="off"></div>
-          <div class="view" data-for="booting"><p class="center">VATL-100<br>起動中…</p></div>
+      <!-- ===== 車載ディスプレイ ===== -->
+      <section class="device" aria-label="車載ディスプレイ">
+        <div class="bezel">
+          <div class="screen-frame">
+            <div id="display" class="display" data-view="off" data-theme="dark">
 
-          <!-- バックカメラ -->
-          <div class="view camera" data-for="camera">
-            <p class="center">バックカメラ</p>
-            <p class="guide">周囲の安全を直接確認してください</p>
-          </div>
+              <!-- ステータスバー -->
+              <div class="status-bar">
+                <span class="sb-left">
+                  <span id="sb-time" class="sb-time"></span>
+                  <span id="sb-temp" class="sb-temp"></span>
+                </span>
+                <span class="sb-icons">
+                  <span id="sb-fuel" class="sb-icon warn" title="燃料残量わずか"><svg><use href="#i-fuel"/></svg></span>
+                  <span id="sb-door" class="sb-icon warn" title="ドア開"><svg><use href="#i-door"/></svg></span>
+                  <span id="sb-mute" class="sb-icon" title="MUTE"><svg><use href="#i-mute"/></svg></span>
+                  <span id="sb-usb" class="sb-icon" title="USB"><svg><use href="#i-usb"/></svg></span>
+                  <span id="sb-bt" class="sb-icon" title="Bluetooth"><svg><use href="#i-bt"/></svg></span>
+                  <span class="sb-signal" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                </span>
+              </div>
 
-          <!-- 電話 -->
-          <div class="view" data-for="call">
-            <p id="call-title" class="center"></p>
-            <div class="soft-buttons">
-              <button type="button" data-press="answer" id="btn-answer">応答</button>
-              <button type="button" data-press="reject" id="btn-reject" class="danger">拒否</button>
-              <button type="button" data-press="hangup" id="btn-hangup" class="danger">終話</button>
+              <!-- アプリ表示領域 -->
+              <div class="stage">
+                <div class="view view-off" data-for="off"></div>
+
+                <div class="view view-boot" data-for="booting">
+                  <div class="boot-mark"><svg><use href="#i-nav"/></svg></div>
+                  <p class="boot-logo">VATL</p>
+                  <div class="boot-bar"><span></span></div>
+                </div>
+
+                <!-- バックカメラ -->
+                <div class="view view-camera" data-for="camera">
+                  <svg class="camera-scene" viewBox="0 0 1600 600" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stop-color="#3b4048"/><stop offset="1" stop-color="#22262c"/>
+                      </linearGradient>
+                    </defs>
+                    <rect width="1600" height="600" fill="url(#ground)"/>
+                    <rect width="1600" height="170" fill="#59616c"/>
+                    <path d="M160 170 L0 600 M520 170 L330 600 M1080 170 L1270 600 M1440 170 L1600 600" stroke="#d9dde2" stroke-width="6" opacity=".55"/>
+                    <path d="M470 600 L640 230 M1130 600 L960 230" stroke="#ffd34d" stroke-width="9" fill="none" stroke-linecap="round"/>
+                    <path d="M600 320 H1000" stroke="#ffd34d" stroke-width="7"/>
+                    <path d="M545 440 H1055" stroke="#ff9f1a" stroke-width="7"/>
+                    <path d="M495 560 H1105" stroke="#ff4d4d" stroke-width="8"/>
+                  </svg>
+                  <p class="camera-note">周囲の安全を直接確認してください</p>
+                </div>
+
+                <!-- 電話（着信・通話） -->
+                <div class="view view-call" data-for="call">
+                  <div class="call-avatar">佐</div>
+                  <p class="call-name">佐藤 健</p>
+                  <p class="call-sub">携帯</p>
+                  <p id="call-status" class="call-status"></p>
+                  <div class="call-actions">
+                    <button type="button" data-press="reject" id="btn-reject" class="call-btn danger" aria-label="拒否"><svg><use href="#i-hangup"/></svg></button>
+                    <button type="button" data-press="answer" id="btn-answer" class="call-btn ok" aria-label="応答"><svg><use href="#i-phone"/></svg></button>
+                    <button type="button" data-press="hangup" id="btn-hangup" class="call-btn danger" aria-label="終話"><svg><use href="#i-hangup"/></svg></button>
+                  </div>
+                </div>
+
+                <!-- ホーム -->
+                <div class="view view-home" data-for="home">
+                  <section class="card card-map">
+                    <svg class="map" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                      <rect class="map-land" width="800" height="500"/>
+                      <path class="map-water" d="M560 0 C600 120 700 160 800 150 V0z"/>
+                      <path class="map-park" d="M90 330 h150 v110 h-150z"/>
+                      <g class="map-road-minor">
+                        <path d="M0 120 H800 M0 230 H800 M0 400 H800 M140 0 V500 M300 0 V500 M480 0 V500 M640 0 V500"/>
+                      </g>
+                      <g class="map-road-major">
+                        <path d="M0 310 C200 300 330 260 420 200 S640 90 800 80"/>
+                        <path d="M380 500 V0"/>
+                      </g>
+                      <path class="map-route js-route-only" d="M380 360 V310 C420 250 470 220 560 190 S700 130 735 115"/>
+                      <g class="js-route-only"><use href="#i-pin" x="715" y="80" width="42" height="42" class="map-pin"/></g>
+                      <g transform="translate(380 360)"><circle r="26" class="map-me-halo"/><use href="#i-nav" x="-15" y="-16" width="30" height="30" class="map-me"/></g>
+                    </svg>
+                    <button type="button" class="map-search" data-press="navi"><svg><use href="#i-search"/></svg>目的地を検索</button>
+                    <div class="map-guide">
+                      <div>
+                        <p id="home-route" class="route-text"></p>
+                        <p class="route-sub js-route-only">ルート案内中</p>
+                      </div>
+                      <button type="button" data-press="cancelRoute" class="pill subtle js-route-only">案内中止</button>
+                    </div>
+                  </section>
+
+                  <section class="card card-media">
+                    <div class="media-row">
+                      <div class="art js-art"><svg><use href="#i-music"/></svg></div>
+                      <div class="media-text">
+                        <p class="media-title js-media"></p>
+                        <p class="media-sub"><span class="js-source"></span> ・ <span class="js-play-state"></span></p>
+                      </div>
+                    </div>
+                    <div class="media-controls">
+                      <button type="button" data-press="tuneDown" class="ctl js-radio-only" aria-label="選局を下げる"><svg><use href="#i-left"/></svg></button>
+                      <button type="button" data-press="trackPrev" class="ctl js-track-only" aria-label="前の曲"><svg><use href="#i-prev"/></svg></button>
+                      <button type="button" data-press="playPause" class="ctl main js-track-only" aria-label="再生・一時停止"><svg><use class="js-play-icon" href="#i-pause"/></svg></button>
+                      <button type="button" data-press="trackNext" class="ctl js-track-only" aria-label="次の曲"><svg><use href="#i-next"/></svg></button>
+                      <button type="button" data-press="tuneUp" class="ctl js-radio-only" aria-label="選局を上げる"><svg><use href="#i-right"/></svg></button>
+                    </div>
+                  </section>
+
+                  <section class="card card-phone">
+                    <span class="card-icon"><svg><use href="#i-phone"/></svg></span>
+                    <div>
+                      <p class="card-title">電話</p>
+                      <p class="muted js-phone-state"></p>
+                    </div>
+                    <button type="button" data-press="phone" class="pill subtle">開く</button>
+                  </section>
+                </div>
+
+                <!-- アプリ一覧 -->
+                <div class="view view-apps" data-for="apps">
+                  <button type="button" class="app-tile" data-press="navi"><span class="app-icon i-map"><svg><use href="#i-nav"/></svg></span>地図</button>
+                  <button type="button" class="app-tile" data-press="media"><span class="app-icon i-media"><svg><use href="#i-music"/></svg></span>メディア</button>
+                  <button type="button" class="app-tile" data-press="phone"><span class="app-icon i-phone"><svg><use href="#i-phone"/></svg></span>電話</button>
+                  <button type="button" class="app-tile" data-press="settings"><span class="app-icon i-settings"><svg><use href="#i-settings"/></svg></span>設定</button>
+                </div>
+
+                <!-- 地図（目的地検索） -->
+                <div class="view view-navi" data-for="navi">
+                  <div class="navi-panel">
+                    <form id="search-form" class="search">
+                      <svg><use href="#i-search"/></svg>
+                      <input id="keyword" type="text" autocomplete="off" placeholder="施設名を入力">
+                      <button type="submit" class="pill">検索</button>
+                    </form>
+                    <ul id="results" class="results"></ul>
+                  </div>
+                  <svg class="map navi-map" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                    <rect class="map-land" width="800" height="500"/>
+                    <path class="map-water" d="M560 0 C600 120 700 160 800 150 V0z"/>
+                    <path class="map-park" d="M90 330 h150 v110 h-150z"/>
+                    <g class="map-road-minor"><path d="M0 120 H800 M0 230 H800 M0 400 H800 M140 0 V500 M300 0 V500 M480 0 V500 M640 0 V500"/></g>
+                    <g class="map-road-major"><path d="M0 310 C200 300 330 260 420 200 S640 90 800 80"/><path d="M380 500 V0"/></g>
+                    <g transform="translate(380 440)"><circle r="26" class="map-me-halo"/><use href="#i-nav" x="-15" y="-16" width="30" height="30" class="map-me"/></g>
+                  </svg>
+                </div>
+
+                <!-- メディア -->
+                <div class="view view-media" data-for="media">
+                  <div class="source-tabs" role="tablist">
+                    <button type="button" data-press="selectSource" data-arg="radio" class="tab"><svg><use href="#i-radio"/></svg>ラジオ</button>
+                    <button type="button" data-press="selectSource" data-arg="bt" class="tab"><svg><use href="#i-bt"/></svg>Bluetooth</button>
+                    <button type="button" data-press="selectSource" data-arg="usb" class="tab"><svg><use href="#i-usb"/></svg>USB</button>
+                  </div>
+                  <div class="media-main">
+                    <div class="art big js-art"><svg><use href="#i-music"/></svg></div>
+                    <div class="media-detail">
+                      <p class="media-sub js-source"></p>
+                      <p class="media-title xl js-media"></p>
+                      <p class="media-sub js-play-state"></p>
+                      <div class="progress js-track-only"><span></span></div>
+                      <div class="media-controls">
+                        <button type="button" data-press="tuneDown" class="ctl js-radio-only" aria-label="選局を下げる"><svg><use href="#i-left"/></svg></button>
+                        <button type="button" data-press="trackPrev" class="ctl js-track-only" aria-label="前の曲"><svg><use href="#i-prev"/></svg></button>
+                        <button type="button" data-press="playPause" class="ctl main js-track-only" aria-label="再生・一時停止"><svg><use class="js-play-icon" href="#i-pause"/></svg></button>
+                        <button type="button" data-press="trackNext" class="ctl js-track-only" aria-label="次の曲"><svg><use href="#i-next"/></svg></button>
+                        <button type="button" data-press="tuneUp" class="ctl js-radio-only" aria-label="選局を上げる"><svg><use href="#i-right"/></svg></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 電話 -->
+                <div class="view view-phone" data-for="phone">
+                  <div class="app-head"><svg><use href="#i-phone"/></svg><span>電話</span><span class="muted js-phone-state"></span></div>
+                  <ul id="recent-calls" class="list">
+                    <li><span class="avatar">佐</span><span class="grow">佐藤 健<small>携帯</small></span><span class="muted">着信 ・ 昨日</span></li>
+                    <li><span class="avatar">自</span><span class="grow">自宅<small>固定</small></span><span class="muted">発信 ・ 11/19</span></li>
+                    <li><span class="avatar">整</span><span class="grow">整備工場<small>勤務先</small></span><span class="muted miss">不在着信 ・ 11/18</span></li>
+                  </ul>
+                </div>
+
+                <!-- 設定 -->
+                <div class="view view-settings" data-for="settings">
+                  <div class="app-head"><svg><use href="#i-settings"/></svg><span>設定</span></div>
+                  <ul class="list settings-list">
+                    <li>
+                      <span class="row-icon"><svg><use href="#i-brightness"/></svg></span>
+                      <span class="grow">画面の明るさ</span>
+                      <span class="stepper">
+                        <button type="button" data-press="brightDown" class="ctl small" aria-label="暗くする"><svg><use href="#i-down"/></svg></button>
+                        <strong id="st-bright"></strong>
+                        <button type="button" data-press="brightUp" class="ctl small" aria-label="明るくする"><svg><use href="#i-up"/></svg></button>
+                      </span>
+                    </li>
+                    <li>
+                      <span class="row-icon"><svg><use href="#i-theme"/></svg></span>
+                      <span class="grow">テーマ</span>
+                      <span class="segmented">
+                        <button type="button" data-press="theme" data-arg="auto" class="tab">自動</button>
+                        <button type="button" data-press="theme" data-arg="light" class="tab">ライト</button>
+                        <button type="button" data-press="theme" data-arg="dark" class="tab">ダーク</button>
+                      </span>
+                    </li>
+                    <li><span class="row-icon"><svg><use href="#i-fuel"/></svg></span><span class="grow">燃料残量</span><span id="st-fuel" class="muted"></span></li>
+                    <li><span class="row-icon"><svg><use href="#i-thermo"/></svg></span><span class="grow">外気温</span><span id="st-outside" class="muted"></span></li>
+                    <li><span class="row-icon"><svg><use href="#i-info"/></svg></span><span class="grow">ソフトウェア</span><span class="muted">VATL-100 ver 2.0</span></li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- システムバー（エアコン＋ナビゲーション） -->
+              <div class="climate-bar">
+                <div class="zone">
+                  <button type="button" data-hvac="seatDriver" id="cl-seat-driver" class="seat" aria-label="運転席シートヒーター"><svg><use href="#i-seat"/></svg><span class="lv"><i></i><i></i><i></i></span></button>
+                  <span class="temp-ctl">
+                    <button type="button" data-hvac="driverUp" class="chev" aria-label="運転席の温度を上げる"><svg><use href="#i-up"/></svg></button>
+                    <span id="cl-driver" class="temp"></span>
+                    <button type="button" data-hvac="driverDown" class="chev" aria-label="運転席の温度を下げる"><svg><use href="#i-down"/></svg></button>
+                  </span>
+                </div>
+
+                <div class="nav-icons">
+                  <button type="button" data-press="home" class="nav-btn js-nav" data-screen="home" aria-label="ホーム"><svg><use href="#i-home"/></svg></button>
+                  <button type="button" data-press="navi" class="nav-btn js-nav" data-screen="navi" aria-label="地図"><svg><use href="#i-nav"/></svg></button>
+                  <button type="button" data-press="media" class="nav-btn js-nav" data-screen="media" aria-label="メディア"><svg><use href="#i-music"/></svg></button>
+                  <button type="button" data-press="phone" class="nav-btn js-nav" data-screen="phone" aria-label="電話"><svg><use href="#i-phone"/></svg></button>
+                  <button type="button" data-press="apps" class="nav-btn js-nav" data-screen="apps" aria-label="アプリ一覧"><svg><use href="#i-apps"/></svg></button>
+                  <button type="button" id="hvac-toggle" class="nav-btn" aria-label="エアコン"><svg><use href="#i-fan"/></svg><span id="cl-fan-badge" class="badge"></span></button>
+                  <button type="button" id="sb-notify" class="nav-btn" aria-label="通知"><svg><use href="#i-bell"/></svg><span id="notify-badge" class="badge dot" hidden></span></button>
+                </div>
+
+                <div class="zone right">
+                  <span class="temp-ctl">
+                    <button type="button" data-hvac="passengerUp" class="chev" aria-label="助手席の温度を上げる"><svg><use href="#i-up"/></svg></button>
+                    <span id="cl-passenger" class="temp"></span>
+                    <button type="button" data-hvac="passengerDown" class="chev" aria-label="助手席の温度を下げる"><svg><use href="#i-down"/></svg></button>
+                  </span>
+                  <button type="button" data-hvac="seatPassenger" id="cl-seat-passenger" class="seat" aria-label="助手席シートヒーター"><svg><use href="#i-seat"/></svg><span class="lv"><i></i><i></i><i></i></span></button>
+                </div>
+              </div>
+
+              <!-- エアコンパネル -->
+              <div id="hvac-panel" class="hvac-panel" hidden>
+                <div class="hvac-head">
+                  <strong>エアコン</strong>
+                  <button type="button" id="hvac-close" class="ctl small" aria-label="閉じる"><svg><use href="#i-close"/></svg></button>
+                </div>
+                <div class="hvac-grid">
+                  <div class="fan-ctl">
+                    <button type="button" data-hvac="fanDown" class="ctl" aria-label="風量を下げる"><svg><use href="#i-left"/></svg></button>
+                    <div class="fan-meter">
+                      <svg class="fan-icon"><use href="#i-fan"/></svg>
+                      <span id="cl-fan" class="fan-label"></span>
+                      <span id="cl-fan-bars" class="fan-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                    </div>
+                    <button type="button" data-hvac="fanUp" class="ctl" aria-label="風量を上げる"><svg><use href="#i-right"/></svg></button>
+                  </div>
+                  <button type="button" data-hvac="ac" id="cl-ac" class="toggle"><svg><use href="#i-snow"/></svg>A/C</button>
+                  <button type="button" data-hvac="defrost" id="cl-defrost" class="toggle"><svg><use href="#i-defrost"/></svg>デフロスター</button>
+                  <button type="button" data-hvac="sync" id="cl-sync" class="toggle"><svg><use href="#i-sync"/></svg>SYNC</button>
+                </div>
+              </div>
+
+              <!-- 通知センター -->
+              <aside id="notifications" class="notifications" hidden>
+                <div class="notifications-head">
+                  <strong>通知</strong>
+                  <button type="button" id="notify-clear" class="pill subtle">すべて消去</button>
+                </div>
+                <ul id="notify-list" class="list"></ul>
+              </aside>
+
+              <!-- 音量表示 -->
+              <div id="volume-pop" class="volume-pop" hidden>
+                <svg class="vol-icon"><use id="volume-icon" href="#i-vol"/></svg>
+                <span class="vol-track"><span id="volume-fill" class="vol-fill"></span></span>
+                <span id="volume-num" class="vol-num"></span>
+              </div>
+
+              <!-- お知らせ（ヘッドアップ通知） -->
+              <div id="toast" class="toast" role="status" hidden>
+                <svg><use href="#i-bell"/></svg><span id="toast-text"></span>
+              </div>
             </div>
           </div>
-
-          <!-- ホーム -->
-          <div class="view" data-for="home">
-            <div class="status-bar">
-              <span id="st-source"></span>
-              <span id="st-volume"></span>
-            </div>
-            <p id="st-media" class="media"></p>
-            <div class="soft-buttons">
-              <button type="button" data-press="tuneDown" id="btn-tune-down">◀ 選局</button>
-              <button type="button" data-press="tuneUp" id="btn-tune-up">選局 ▶</button>
-            </div>
-            <div id="route" class="route" hidden>
-              <span id="route-text"></span>
-              <button type="button" data-press="cancelRoute" class="secondary">案内中止</button>
-            </div>
-            <div class="soft-buttons">
-              <button type="button" data-press="navi">目的地検索</button>
-              <button type="button" data-press="settings">設定</button>
-            </div>
-          </div>
-
-          <!-- 目的地検索 -->
-          <div class="view" data-for="navi">
-            <h3>目的地検索</h3>
-            <form id="search-form" class="search">
-              <input id="keyword" type="text" autocomplete="off" placeholder="施設名を入力">
-              <button type="submit">検索</button>
-            </form>
-            <ul id="results" class="results"></ul>
-          </div>
-
-          <!-- 設定 -->
-          <div class="view" data-for="settings">
-            <h3>設定</h3>
-            <p>画面の明るさ：<strong id="st-bright"></strong></p>
-            <div class="soft-buttons">
-              <button type="button" data-press="brightDown">－</button>
-              <button type="button" data-press="brightUp">＋</button>
-            </div>
-          </div>
-
-          <p id="message" class="toast" role="status"></p>
         </div>
 
-        <div class="hard-buttons">
-          <button type="button" data-press="volDown">VOL －</button>
-          <button type="button" data-press="volUp">VOL ＋</button>
-          <button type="button" data-press="mute">MUTE</button>
-          <button type="button" data-press="source">SOURCE</button>
-          <button type="button" data-press="home">HOME</button>
+        <div class="steering" aria-label="ステアリングスイッチ">
+          <span class="steering-label">ステアリングスイッチ</span>
+          <div class="steering-pad">
+            <button type="button" data-press="volUp" class="sw" aria-label="VOL ＋">VOL ＋</button>
+            <button type="button" data-press="volDown" class="sw" aria-label="VOL －">VOL －</button>
+            <button type="button" data-press="mute" class="sw" aria-label="MUTE">MUTE</button>
+            <button type="button" data-press="source" class="sw" aria-label="SOURCE">SOURCE</button>
+          </div>
         </div>
       </section>
 
-      <!-- 車両信号 -->
-      <section class="panel" aria-label="車両信号パネル">
-        <h2>車両信号</h2>
-        <label class="row"><input id="sig-acc" type="checkbox"> ACC（エンジンスイッチ）ON</label>
-        <label class="row">車速
-          <input id="sig-speed-range" type="range" min="0" max="180" step="1" value="0">
-          <input id="sig-speed" type="number" min="0" max="180" step="1" value="0"> km/h
-        </label>
-        <fieldset class="row">
-          <legend>シフト</legend>
-          <label><input type="radio" name="shift" value="P" checked> P</label>
-          <label><input type="radio" name="shift" value="R"> R</label>
-          <label><input type="radio" name="shift" value="D"> D</label>
-        </fieldset>
-        <label class="row"><input id="sig-usb" type="checkbox"> USBメモリ接続</label>
-        <label class="row"><input id="sig-bt" type="checkbox"> スマートフォン Bluetooth接続</label>
-        <p class="row"><button type="button" id="sig-call">着信を発生させる</button></p>
-        <p class="row"><button type="button" id="sig-reset" class="secondary">工場出荷状態に戻す</button></p>
+      <!-- ===== 拡張コントロール ===== -->
+      <section class="controls" aria-label="拡張コントロール">
+        <h2>拡張コントロール</h2>
+        <div class="ctl-tabs" role="tablist">
+          <button type="button" role="tab" data-tab="vehicle" aria-selected="true">車両</button>
+          <button type="button" role="tab" data-tab="env">環境</button>
+          <button type="button" role="tab" data-tab="sensor">センサー</button>
+          <button type="button" role="tab" data-tab="conn">接続</button>
+          <button type="button" role="tab" data-tab="state">状態</button>
+        </div>
 
-        <h2>状態</h2>
-        <table class="state"><tbody id="state"></tbody></table>
+        <div class="ctl-panel" data-panel="vehicle">
+          <label class="row switch-row"><span>イグニッション（ACC）</span><input id="sig-acc" type="checkbox" class="switch"></label>
+          <label class="row">車速
+            <input id="sig-speed-range" type="range" min="0" max="180" step="1" value="0">
+            <input id="sig-speed" type="number" min="0" max="180" step="1" value="0"> km/h
+          </label>
+          <fieldset class="row gear">
+            <legend>ギア</legend>
+            <label><input type="radio" name="shift" value="P" checked><span>P</span></label>
+            <label><input type="radio" name="shift" value="R"><span>R</span></label>
+            <label><input type="radio" name="shift" value="N"><span>N</span></label>
+            <label><input type="radio" name="shift" value="D"><span>D</span></label>
+          </fieldset>
+        </div>
+
+        <div class="ctl-panel" data-panel="env" hidden>
+          <label class="row switch-row"><span>夜間（ヘッドライト点灯）</span><input id="sig-night" type="checkbox" class="switch"></label>
+          <label class="row">外気温
+            <input id="sig-outside" type="number" min="-30" max="50" step="1" value="20"> ℃
+          </label>
+        </div>
+
+        <div class="ctl-panel" data-panel="sensor" hidden>
+          <label class="row">燃料残量
+            <input id="sig-fuel-range" type="range" min="0" max="100" step="1" value="60">
+            <input id="sig-fuel" type="number" min="0" max="100" step="1" value="60"> %
+          </label>
+          <label class="row switch-row"><span>運転席ドアが開いている</span><input id="sig-door" type="checkbox" class="switch"></label>
+        </div>
+
+        <div class="ctl-panel" data-panel="conn" hidden>
+          <label class="row switch-row"><span>USBメモリ接続</span><input id="sig-usb" type="checkbox" class="switch"></label>
+          <label class="row switch-row"><span>スマートフォン Bluetooth接続</span><input id="sig-bt" type="checkbox" class="switch"></label>
+          <p class="row"><button type="button" id="sig-call" class="pill">着信を発生させる</button></p>
+        </div>
+
+        <div class="ctl-panel" data-panel="state" hidden>
+          <table class="state"><tbody id="state"></tbody></table>
+          <p class="row"><button type="button" id="sig-reset" class="pill ghost">工場出荷状態に戻す</button></p>
+        </div>
       </section>
     </div>
 
     <section aria-label="操作ログ">
       <h2>操作ログ</h2>
       <p class="actions">
-        <button type="button" id="log-copy" class="secondary">ログをコピー</button>
-        <button type="button" id="log-clear" class="secondary">ログを消去</button>
+        <button type="button" id="log-copy" class="pill ghost">ログをコピー</button>
+        <button type="button" id="log-clear" class="pill ghost">ログを消去</button>
       </p>
       <ol id="log" class="log"></ol>
     </section>
